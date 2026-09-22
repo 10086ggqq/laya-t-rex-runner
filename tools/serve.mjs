@@ -54,6 +54,6 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, '127.0.0.1', () => {
-  console.log(`KLrun T-Rex Runner 已启动： http://127.0.0.1:${PORT}/`);
+  console.log(`Laya-T-Rex Runner 已启动： http://127.0.0.1:${PORT}/`);
   console.log(`静态根目录： ${ROOT}`);
 });

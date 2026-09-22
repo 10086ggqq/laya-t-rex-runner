@@ -9,7 +9,7 @@
  *   于是单文件在 file:// 下也能完整运行。
  *
  * 用法：node tools/bundle.mjs [输出路径]
- *   默认输出 dist/klrun-trex-runner.html
+ *   默认输出 dist/laya-t-rex-runner.html
  *
  * 打包策略（保持源码零改动，全部在构建期做）：
  *   1. 按拓扑序拼接模块，剥掉 import / export，让它们共处同一作用域；
@@ -23,7 +23,7 @@ import url from 'node:url';
 
 const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
-const OUT = path.resolve(ROOT, process.argv[2] || 'dist/klrun-trex-runner.html');
+const OUT = path.resolve(ROOT, process.argv[2] || 'dist/laya-t-rex-runner.html');
 
 /** 主线程依赖序（保证每个模块出现时，它 import 的东西都已定义） */
 const MAIN_ORDER = [
@@ -121,7 +121,7 @@ const SPRITE_2X = `data:image/png;base64,${b64('assets/offline-sprite-2x.png')}`
 // ------------------------------------------------------------- Worker 代码
 /** 评测载荷的执行体，主线程降级路径与 Worker 共用 */
 const BENCH_RUNNER = `
-function __klrunRunBench(data, post) {
+function __layaTRexRunBench(data, post) {
   const weightsFor = (brainId, delay) => {
     if (!brainId.includes('neural')) return undefined;
     return data.weights[delay] || data.weights[0] || undefined;
@@ -156,7 +156,7 @@ const workerCode =
     .join('') +
   banner('bench runner + worker bootstrap') +
   BENCH_RUNNER +
-  '\nself.onmessage = (e) => __klrunRunBench(e.data, (m) => self.postMessage(m));\n';
+  '\nself.onmessage = (e) => __layaTRexRunBench(e.data, (m) => self.postMessage(m));\n';
 
 if (/<\/script/i.test(workerCode)) throw new Error('Worker 代码里出现了 </script，需要转义');
 
@@ -170,7 +170,7 @@ if (!OLD_LOAD.test(host)) throw new Error('未找到 loadWeights()，源码结�
 host = host.replace(
   OLD_LOAD,
   `async function loadWeights() {
-  const inline = typeof __KLRUN_WEIGHTS__ !== 'undefined' ? __KLRUN_WEIGHTS__ : null;
+  const inline = typeof __layaTRexWeights !== 'undefined' ? __layaTRexWeights : null;
   if (inline) {
     for (const k of Object.keys(inline)) state.weights[Number(k)] = inline[k];
     document.body.dataset.weights = Object.keys(state.weights).join(',') || 'none';
@@ -185,7 +185,7 @@ host = host.replace(
       const delay = /delay(\\d+)/.exec(f) ? Number(/delay(\\d+)/.exec(f)[1]) : 0;
       state.weights[delay] = j;
     } catch (e) {
-      console.warn('[klrun] 未能加载 ' + f);
+      console.warn('[layatrex] 未能加载 ' + f);
     }
   }
   document.body.dataset.weights = Object.keys(state.weights).join(',') || 'none';
@@ -207,19 +207,19 @@ host = host.replace(OLD_WORKER, 'makeBenchWorker()');
 const WORKER_FACTORY = `
 // —— 单文件模式：从内联 <script> 造 Worker；file:// 下若被策略拦截，降级为主线程执行 ——
 function makeBenchWorker() {
-  const el = document.getElementById('klrun-bench-worker');
+  const el = document.getElementById('layatrex-bench-worker');
   if (el && typeof Worker !== 'undefined' && typeof Blob !== 'undefined' && typeof URL !== 'undefined') {
     try {
       const blob = new Blob([el.textContent], { type: 'text/javascript' });
       return new Worker(URL.createObjectURL(blob));
     } catch (e) {
-      console.warn('[klrun] Blob Worker 不可用，改在主线程跑基准测试', e);
+      console.warn('[layatrex] Blob Worker 不可用，改在主线程跑基准测试', e);
     }
   }
   const w = { onmessage: null, onerror: null };
   w.postMessage = (data) =>
     setTimeout(() => {
-      __klrunRunBench(data, (m) => {
+      __layaTRexRunBench(data, (m) => {
         if (typeof w.onmessage === 'function') w.onmessage({ data: m });
       });
     }, 0);
@@ -235,7 +235,7 @@ if (!tpl.includes(SCRIPT_TAG)) throw new Error('index.html 里未找到入口 sc
 
 const inlineScript = [
   banner('内联权重（由 brain/weights*.json 生成）'),
-  `const __KLRUN_WEIGHTS__ = ${weightsLiteral};`,
+  `const __layaTRexWeights = ${weightsLiteral};`,
   '\n',
   WORKER_FACTORY,
   BENCH_RUNNER,
@@ -245,7 +245,7 @@ const inlineScript = [
 
 const html = tpl.replace(
   SCRIPT_TAG,
-  `<script type="text/plain" id="klrun-bench-worker">${workerCode}</script>\n` +
+  `<script type="text/plain" id="layatrex-bench-worker">${workerCode}</script>\n` +
     `<script>\n${inlineScript}\n</script>`,
 );
 

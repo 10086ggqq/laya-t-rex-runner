@@ -26,7 +26,8 @@ const state = {
   brainId: 'layalite-neural',
   reactionDelay: 0,
   debug: false,
-  best: Number(localStorage.getItem('klrun.best') || 0),
+  // 读取时回退旧键 'klrun.best'，改名前存过成绩的浏览器不会丢记录
+  best: Number(localStorage.getItem('layatrex.best') || localStorage.getItem('klrun.best') || 0),
   ticksThisSecond: 0,
   decPerSec: 0,
   fps: 0,
@@ -46,7 +47,7 @@ async function loadWeights() {
       const delay = /delay(\d+)/.exec(f) ? Number(/delay(\d+)/.exec(f)[1]) : 0;
       state.weights[delay] = j;
     } catch (e) {
-      console.warn(`[klrun] 未能加载 ${f}（先跑 node brain/distill.mjs 生成它）`);
+      console.warn(`[layatrex] 未能加载 ${f}（先跑 node brain/distill.mjs 生成它）`);
     }
   }
   document.body.dataset.weights = Object.keys(state.weights).join(',') || 'none';
@@ -265,7 +266,7 @@ function loop(now) {
     if (p.crashed) {
       if (p.world.score > state.best) {
         state.best = p.world.score;
-        localStorage.setItem('klrun.best', String(state.best));
+        localStorage.setItem('layatrex.best', String(state.best));
       }
       break;
     }

@@ -1,6 +1,8 @@
-# KLrun T-Rex Runner
+# Laya-T-Rex Runner
 
 **用 Laya 的类型化决策范式，让一个 5k 参数的小模型学会玩 Chrome 小恐龙。**
+
+> 非官方项目：本仓库是独立实现，与 Laya 团队无隶属关系，也不包含其任何模型权重。
 
 [![简体中文](https://img.shields.io/badge/README-简体中文-1a73e8)](README.md)
 [![English](https://img.shields.io/badge/README-English-5f6368)](README.en.md)
@@ -55,7 +57,7 @@
 
 ### 零安装：直接打开单文件
 
-下载 [`dist/klrun-trex-runner.html`](dist/klrun-trex-runner.html)，**双击即可**。
+下载 [`dist/laya-t-rex-runner.html`](dist/laya-t-rex-runner.html)，**双击即可**。
 模块、权重、精灵图全部内联在这一个文件里——不需要 Node，不需要起服务器，运行时零外部请求。
 
 > 为什么要这么做：ES Module 和 `fetch` 都不允许在 `file://` 下工作，所以源码形态必须
@@ -65,7 +67,7 @@
 ### 从源码跑
 
 ```bash
-git clone <this-repo> && cd klrun-trex-runner
+git clone <this-repo> && cd laya-t-rex-runner
 
 # 1) 训练决策头（首次约几分钟；会生成 brain/weights.json 与评测报告）
 node brain/distill.mjs
@@ -87,7 +89,7 @@ node tools/serve.mjs
 ### 自己打包单文件
 
 ```bash
-npm run bundle          # 生成 dist/klrun-trex-runner.html
+npm run bundle          # 生成 dist/laya-t-rex-runner.html
 npm run verify:bundle   # 结构 / 语法 / 行为三层自检
 ```
 
@@ -219,7 +221,7 @@ node brain/distill.mjs --episodes 24 --dagger 3 --delays 0,8
 ## 目录结构
 
 ```
-klrun-trex-runner/
+laya-t-rex-runner/
 ├── index.html                 浏览器演示（游戏画面 + AI 驾驶舱）
 ├── package.json
 ├── src/
@@ -250,7 +252,7 @@ klrun-trex-runner/
 │   ├── bundle.mjs             把整站打成单文件 HTML
 │   └── verify-bundle.cjs      单文件产物的结构 / 语法 / 行为自检
 ├── dist/
-│   └── klrun-trex-runner.html 单文件演示页，双击即运行（零外部请求）
+│   └── laya-t-rex-runner.html 单文件演示页，双击即运行（零外部请求）
 └── assets/                    精灵图、架构图、上游许可
 ```
 

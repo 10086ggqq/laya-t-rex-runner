@@ -1,7 +1,7 @@
 /**
  * verify-bundle.cjs —— 单文件产物的自检
  *
- * 校验 dist/klrun-trex-runner.html：
+ * 校验 dist/laya-t-rex-runner.html：
  *   1. 结构性：无残留 ESM 语法、无外链资源、精灵图已内联
  *   2. 语法：内联的主脚本与 Worker 脚本都能被解析
  *   3. 行为：把内联 Worker 代码放进 vm 里真跑一遍评测，确认数值有效
@@ -13,7 +13,7 @@ const vm = require('node:vm');
 const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
-const FILE = process.argv[2] || path.join(ROOT, 'dist/klrun-trex-runner.html');
+const FILE = process.argv[2] || path.join(ROOT, 'dist/laya-t-rex-runner.html');
 
 let failed = 0;
 const ok = (label, extra) => console.log('  [通过] ' + label + (extra ? '  ' + extra : ''));
@@ -36,7 +36,7 @@ console.log('结构检查');
 /assets\/offline-sprite/.test(html) ? bad('精灵图未内联') : ok('精灵图已内联为 data URI');
 /data:image\/png;base64,/.test(html) ? ok('data URI 存在') : bad('未找到 data URI');
 
-const workerMatch = /<script type="text\/plain" id="klrun-bench-worker">([\s\S]*?)<\/script>/.exec(html);
+const workerMatch = /<script type="text\/plain" id="layatrex-bench-worker">([\s\S]*?)<\/script>/.exec(html);
 const mainMatches = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
 if (!workerMatch) bad('未找到内联 Worker 脚本');
 else ok('内联 Worker 脚本', workerMatch[1].length + ' 字符');

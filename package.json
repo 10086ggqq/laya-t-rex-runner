@@ -1,9 +1,9 @@
 {
-  "name": "klrun-trex-runner",
+  "name": "laya-t-rex-runner",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "KLrun T-Rex Runner - a Laya-style typed-decision engine that plays the Chrome T-Rex runner",
+  "description": "Laya-T-Rex Runner - a Laya-style typed-decision engine that plays the Chrome T-Rex runner",
   "scripts": {
     "serve": "node tools/serve.mjs",
     "distill": "node brain/distill.mjs",

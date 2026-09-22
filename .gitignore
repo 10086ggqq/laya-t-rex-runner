@@ -18,6 +18,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# 说明：dist/klrun-trex-runner.html 是**有意保留**的。
+# 说明：dist/laya-t-rex-runner.html 是**有意保留**的。
 # 它是零外部依赖的单文件演示页，下载后双击即可运行，不需要起服务器；
 # 如需重新生成，执行 npm run bundle。

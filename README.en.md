@@ -1,6 +1,9 @@
-# KLrun T-Rex Runner
+# Laya-T-Rex Runner
 
 **A 5k-parameter model learns to play Chrome's T-Rex runner, driven by Laya's typed-decision paradigm.**
+
+> Unofficial project: an independent implementation, not affiliated with the Laya team,
+> and it ships none of their model weights.
 
 [![简体中文](https://img.shields.io/badge/README-简体中文-5f6368)](README.md)
 [![English](https://img.shields.io/badge/README-English-1a73e8)](README.en.md)
@@ -60,7 +63,7 @@ This repository finishes that thought end to end:
 
 ### Zero install: open the single file
 
-Download [`dist/klrun-trex-runner.html`](dist/klrun-trex-runner.html) and **double-click it**.
+Download [`dist/laya-t-rex-runner.html`](dist/laya-t-rex-runner.html) and **double-click it**.
 The modules, the weights and the sprite sheets are all inlined in that one file — no Node,
 no server, zero external requests at runtime.
 
@@ -72,7 +75,7 @@ no server, zero external requests at runtime.
 ### From source
 
 ```bash
-git clone <this-repo> && cd klrun-trex-runner
+git clone <this-repo> && cd laya-t-rex-runner
 
 # 1) Train the decision head (a few minutes the first time; writes brain/weights.json)
 node brain/distill.mjs
@@ -94,7 +97,7 @@ neural weights are missing; planner, threshold rule and random remain selectable
 ### Building the single file yourself
 
 ```bash
-npm run bundle          # writes dist/klrun-trex-runner.html
+npm run bundle          # writes dist/laya-t-rex-runner.html
 npm run verify:bundle   # three-layer self-check: structure / syntax / behaviour
 ```
 
@@ -246,7 +249,7 @@ and a forward pass under 0.02 ms.
 ## Repository layout
 
 ```
-klrun-trex-runner/
+laya-t-rex-runner/
 ├── index.html                 Browser demo (game canvas + AI cockpit)
 ├── package.json
 ├── src/
@@ -281,7 +284,7 @@ klrun-trex-runner/
 │   ├── bundle.mjs             Flattens the whole site into one HTML file
 │   └── verify-bundle.cjs      Structure / syntax / behaviour self-check of the bundle
 ├── dist/
-│   └── klrun-trex-runner.html Single-file demo, double-click to run (zero external requests)
+│   └── laya-t-rex-runner.html Single-file demo, double-click to run (zero external requests)
 └── assets/                    Sprite sheets, architecture diagram, upstream license
 ```
 
