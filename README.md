@@ -9,6 +9,8 @@
 [![License](https://img.shields.io/badge/license-MIT-0f9d58)](assets/t-rex-runner-LICENSE)
 [![Runtime](https://img.shields.io/badge/runtime-Node%2018%2B%20%7C%20浏览器-8b939e)](#快速开始)
 
+![演示：Laya-T-Rex Runner 驾驶舱 —— 逐帧展示 choice / score / noul 三个类型化答案、路由路径、单次前向耗时与决策日志](assets/demo.gif)
+
 ![架构](assets/architecture.svg)
 
 游戏内核逐行对齐 Chromium 内置小恐龙的参数（重力 `0.6`、起跳初速 `-10`、加速度 `0.001`、
@@ -253,7 +255,7 @@ laya-t-rex-runner/
 │   └── verify-bundle.cjs      单文件产物的结构 / 语法 / 行为自检
 ├── dist/
 │   └── laya-t-rex-runner.html 单文件演示页，双击即运行（零外部请求）
-└── assets/                    精灵图、架构图、上游许可
+└── assets/                    精灵图、架构图、演示动图、上游许可
 ```
 
 ---

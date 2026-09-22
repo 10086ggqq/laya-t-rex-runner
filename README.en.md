@@ -10,6 +10,8 @@
 [![License](https://img.shields.io/badge/license-MIT-0f9d58)](assets/t-rex-runner-LICENSE)
 [![Runtime](https://img.shields.io/badge/runtime-Node%2018%2B%20%7C%20browser-8b939e)](#quick-start)
 
+![Demo: the Laya-T-Rex Runner cockpit — per-frame typed answers (choice / score / noul), router path, forward-pass cost and decision log](assets/demo.gif)
+
 ![Architecture](assets/architecture.svg)
 
 The game core mirrors Chromium's offline T-Rex runner line by line — gravity `0.6`,
@@ -285,7 +287,7 @@ laya-t-rex-runner/
 │   └── verify-bundle.cjs      Structure / syntax / behaviour self-check of the bundle
 ├── dist/
 │   └── laya-t-rex-runner.html Single-file demo, double-click to run (zero external requests)
-└── assets/                    Sprite sheets, architecture diagram, upstream license
+└── assets/                    Sprite sheets, architecture diagram, demo GIF, upstream license
 ```
 
 ---
