@@ -1,7 +1,7 @@
 /**
  * verify-bundle.cjs —— 单文件产物的自检
  *
- * 校验 dist/klrun-standalone.html：
+ * 校验 dist/klrun-trex-runner.html：
  *   1. 结构性：无残留 ESM 语法、无外链资源、精灵图已内联
  *   2. 语法：内联的主脚本与 Worker 脚本都能被解析
  *   3. 行为：把内联 Worker 代码放进 vm 里真跑一遍评测，确认数值有效
@@ -13,7 +13,7 @@ const vm = require('node:vm');
 const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
-const FILE = process.argv[2] || path.join(ROOT, 'dist/klrun-standalone.html');
+const FILE = process.argv[2] || path.join(ROOT, 'dist/klrun-trex-runner.html');
 
 let failed = 0;
 const ok = (label, extra) => console.log('  [通过] ' + label + (extra ? '  ' + extra : ''));

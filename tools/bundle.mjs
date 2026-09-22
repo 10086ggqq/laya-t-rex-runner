@@ -9,7 +9,7 @@
  *   于是单文件在 file:// 下也能完整运行。
  *
  * 用法：node tools/bundle.mjs [输出路径]
- *   默认输出 dist/klrun-standalone.html
+ *   默认输出 dist/klrun-trex-runner.html
  *
  * 打包策略（保持源码零改动，全部在构建期做）：
  *   1. 按拓扑序拼接模块，剥掉 import / export，让它们共处同一作用域；
@@ -23,7 +23,7 @@ import url from 'node:url';
 
 const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
-const OUT = path.resolve(ROOT, process.argv[2] || 'dist/klrun-standalone.html');
+const OUT = path.resolve(ROOT, process.argv[2] || 'dist/klrun-trex-runner.html');
 
 /** 主线程依赖序（保证每个模块出现时，它 import 的东西都已定义） */
 const MAIN_ORDER = [

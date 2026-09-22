@@ -356,9 +356,9 @@ const report = {
   delays: {},
 };
 
-log('############################################################');
-log(` KLrun  蒸馏训练   目标=${CONFIG.target}  网络=${sizes.join('→')}  延迟档=${CONFIG.delays.join(',')}`);
-log('############################################################');
+log('#'.repeat(74));
+log(` KLrun T-Rex Runner   蒸馏训练   目标=${CONFIG.target}   网络=${sizes.join('→')}   延迟档=${CONFIG.delays.join(',')}`);
+log('#'.repeat(74));
 
 for (const delay of CONFIG.delays) {
   log('');

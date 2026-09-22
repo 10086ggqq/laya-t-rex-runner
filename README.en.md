@@ -1,4 +1,4 @@
-# KLrun
+# KLrun T-Rex Runner
 
 **A 5k-parameter model learns to play Chrome's T-Rex runner, driven by Laya's typed-decision paradigm.**
 
@@ -60,7 +60,7 @@ This repository finishes that thought end to end:
 
 ### Zero install: open the single file
 
-Download [`dist/klrun-standalone.html`](dist/klrun-standalone.html) and **double-click it**.
+Download [`dist/klrun-trex-runner.html`](dist/klrun-trex-runner.html) and **double-click it**.
 The modules, the weights and the sprite sheets are all inlined in that one file — no Node,
 no server, zero external requests at runtime.
 
@@ -72,7 +72,7 @@ no server, zero external requests at runtime.
 ### From source
 
 ```bash
-git clone <this-repo> && cd KLrun
+git clone <this-repo> && cd klrun-trex-runner
 
 # 1) Train the decision head (a few minutes the first time; writes brain/weights.json)
 node brain/distill.mjs
@@ -94,7 +94,7 @@ neural weights are missing; planner, threshold rule and random remain selectable
 ### Building the single file yourself
 
 ```bash
-npm run bundle          # writes dist/klrun-standalone.html
+npm run bundle          # writes dist/klrun-trex-runner.html
 npm run verify:bundle   # three-layer self-check: structure / syntax / behaviour
 ```
 
@@ -246,7 +246,7 @@ and a forward pass under 0.02 ms.
 ## Repository layout
 
 ```
-KLrun/
+klrun-trex-runner/
 ├── index.html                 Browser demo (game canvas + AI cockpit)
 ├── package.json
 ├── src/
@@ -281,7 +281,7 @@ KLrun/
 │   ├── bundle.mjs             Flattens the whole site into one HTML file
 │   └── verify-bundle.cjs      Structure / syntax / behaviour self-check of the bundle
 ├── dist/
-│   └── klrun-standalone.html  Single-file demo, double-click to run (zero external requests)
+│   └── klrun-trex-runner.html Single-file demo, double-click to run (zero external requests)
 └── assets/                    Sprite sheets, architecture diagram, upstream license
 ```
 
