@@ -27,6 +27,7 @@
 - [实验：把感知延迟调成 133ms](#实验把感知延迟调成-133ms)
 - [目录结构](#目录结构)
 - [接入真实的 Laya](#接入真实的-laya)
+- [复现](#复现)
 - [来源与许可](#来源与许可)
 
 ---
@@ -52,6 +53,17 @@
 
 ## 快速开始
 
+### 零安装：直接打开单文件
+
+下载 [`dist/klrun-standalone.html`](dist/klrun-standalone.html)，**双击即可**。
+模块、权重、精灵图全部内联在这一个文件里——不需要 Node，不需要起服务器，运行时零外部请求。
+
+> 为什么要这么做：ES Module 和 `fetch` 都不允许在 `file://` 下工作，所以源码形态必须
+> 借助本地服务器。单文件版把 14 个模块按依赖序扁平化内联、权重转成 JS 字面量、
+> 精灵图转成 data URI、评测 Worker 转成 Blob URL，于是双击就能跑。
+
+### 从源码跑
+
 ```bash
 git clone <this-repo> && cd KLrun
 
@@ -64,11 +76,20 @@ node tools/serve.mjs
 # 3) 打开 http://127.0.0.1:5188/
 ```
 
+仓库里已经带了训练好的权重，第 1 步可以跳过。
+
 只想立刻看效果、懒得训练：把 `brain/weights.json` 换成任意一份已有权重，
 或者直接把大脑切到 **LayaLite（规划器）**——它不需要任何训练就近乎无敌。
 
 不做训练也完全能看：先执行第 2、3 步，页面会在顶部提示缺权重，
 此时规划器、阈值规则、随机三个大脑仍然可用。
+
+### 自己打包单文件
+
+```bash
+npm run bundle          # 生成 dist/klrun-standalone.html
+npm run verify:bundle   # 结构 / 语法 / 行为三层自检
+```
 
 ---
 
@@ -224,7 +245,12 @@ KLrun/
 │   ├── weights-delay8.json    delay=8 的决策头
 │   └── report.json            训练与评测报告（数字都从这里来）
 ├── laya_service/              把真实 Laya 包成 HTTP 端点
-├── tools/serve.mjs            零依赖静态服务器
+├── tools/
+│   ├── serve.mjs              零依赖静态服务器
+│   ├── bundle.mjs             把整站打成单文件 HTML
+│   └── verify-bundle.cjs      单文件产物的结构 / 语法 / 行为自检
+├── dist/
+│   └── klrun-standalone.html  单文件演示页，双击即运行（零外部请求）
 └── assets/                    精灵图、架构图、上游许可
 ```
 

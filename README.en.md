@@ -30,6 +30,7 @@ from a single forward pass, and feeds the chosen action straight into the physic
 - [The experiment: 133 ms of perception lag](#the-experiment-133-ms-of-perception-lag)
 - [Repository layout](#repository-layout)
 - [Wiring up the real Laya](#wiring-up-the-real-laya)
+- [Reproducing everything](#reproducing-everything)
 - [Credits and license](#credits-and-license)
 
 ---
@@ -57,6 +58,19 @@ This repository finishes that thought end to end:
 
 ## Quick start
 
+### Zero install: open the single file
+
+Download [`dist/klrun-standalone.html`](dist/klrun-standalone.html) and **double-click it**.
+The modules, the weights and the sprite sheets are all inlined in that one file — no Node,
+no server, zero external requests at runtime.
+
+> Why this exists: neither ES modules nor `fetch` are allowed over `file://`, so the
+> source layout always needs a local server. The single-file build flattens the 14 modules
+> in dependency order, converts the weights into JS literals, the sprites into data URIs
+> and the evaluation worker into a Blob URL — and then a double-click is enough.
+
+### From source
+
 ```bash
 git clone <this-repo> && cd KLrun
 
@@ -69,11 +83,20 @@ node tools/serve.mjs
 # 3) Open http://127.0.0.1:5188/
 ```
 
+Trained weights ship with the repository, so step 1 is optional.
+
 In a hurry? Skip training: switch the brain to **LayaLite (planner)** in the cockpit —
 it needs no training at all and is close to unbeatable.
 
 You can also skip step 1 entirely. Run steps 2 and 3, and the page will tell you the
 neural weights are missing; planner, threshold rule and random remain selectable.
+
+### Building the single file yourself
+
+```bash
+npm run bundle          # writes dist/klrun-standalone.html
+npm run verify:bundle   # three-layer self-check: structure / syntax / behaviour
+```
 
 ---
 
@@ -190,12 +213,29 @@ sees the frame from 8 steps ago, while commands still take effect immediately.
 Training uses `x = observe(state_{T-8})` and `y = teacher's action scores at state_T` —
 that is, *"given a stale picture, infer what should happen right now"*.
 
-{{MAIN_TABLE}}
+| Brain | Forward pass | Mean @ 0 frames | Crash @ 0 frames | Mean @ 8 frames | Crash @ 8 frames |
+| --- | --- | --- | --- | --- | --- |
+| `random` | 0.005 ms | 41 | 100% | 41 | 100% |
+| `rule` | 0.004 ms | 5888 (capped) | **0%** | 206 | 100% |
+| `planner` | 0.100 ms | 5888 (capped) | **0%** | 46 | 100% |
+| `neural` (trained per lag) | 0.017 ms | 1985 | 100% | **3362** | 83% |
+| `layalite` (router + planner) | 0.061 ms | 5888 (capped) | **0%** | 46 | 100% |
+| `layalite-neural` (router + neural) | 0.017 ms | 1985 | 100% | 3208 | 100% |
 
-How to read it: the threshold rule reacts to what it sees, so lag destroys it. The planner
-is handed stale state and plans for the wrong instant, so it collapses too — badly. Only the
-**student trained with the lag baked in** compensates, because anticipation is what it was
-asked to learn.
+> Six episodes per setting and a 20000-frame cap, so the capped score is 5888. Numbers come
+> from `brain/report.json` and can be recomputed independently with `node brain/bench.mjs`.
+
+How to read it:
+
+- **At zero lag a hand-written rule is already enough.** You can wait until the obstacle
+  enters the viewport and still react in time, so learning buys nothing here — `neural`'s
+  1985 is far behind the rule's capped 5888.
+- **The moment lag appears, rule and planner both collapse.** The rule reacts only to what
+  it sees, so it is 8 frames late; the planner does worse still (206 → 46), because it plans
+  precisely against stale state, and precise planning of the wrong instant is confident and
+  wrong. It is also 25× more expensive per decision.
+- **Only the student trained for anticipation survives.** 3362 at 8 frames of lag — 16× the
+  rule and 73× the planner — at 0.017 ms per forward pass.
 
 This is Laya's thesis reproduced on a dinosaur: when latency is the bottleneck, a
 specialised fast System 1 beats general slow reasoning — and it does so with ~5k parameters
@@ -236,7 +276,12 @@ KLrun/
 │   ├── report.json            Full report for the regression pipeline (source of all numbers)
 │   └── report-cls.json        Full report for the classification pipeline
 ├── laya_service/              The real Laya behind an HTTP endpoint
-├── tools/serve.mjs            Zero-dependency static server
+├── tools/
+│   ├── serve.mjs              Zero-dependency static server
+│   ├── bundle.mjs             Flattens the whole site into one HTML file
+│   └── verify-bundle.cjs      Structure / syntax / behaviour self-check of the bundle
+├── dist/
+│   └── klrun-standalone.html  Single-file demo, double-click to run (zero external requests)
 └── assets/                    Sprite sheets, architecture diagram, upstream license
 ```
 
