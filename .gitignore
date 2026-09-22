@@ -1,0 +1,23 @@
+# ---- 依赖 / 缓存 ----
+node_modules/
+__pycache__/
+*.py[cod]
+
+# ---- 会话与项目内数据（不随仓库分发）----
+.workbuddy/
+
+# ---- 上游参考快照 ----
+# .vendor/ 里是 wayou/t-rex-runner 与 laya 的源码副本，项目代码并未引用它；
+# 需要时直接从各自上游仓库获取。t-rex 的许可署名已在 assets/t-rex-runner-LICENSE 保留。
+.vendor/
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# 说明：dist/klrun-standalone.html 是**有意保留**的。
+# 它是零外部依赖的单文件演示页，下载后双击即可运行，不需要起服务器；
+# 如需重新生成，执行 npm run bundle。

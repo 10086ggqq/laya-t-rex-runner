@@ -1,0 +1,4 @@
+# 真实 Laya 才能用到的东西；只跑降级模式可以完全不装
+laya>=0.3.5
+# laya 会带上 torch / transformers / huggingface_hub，
+# 首次运行还需要能访问 HuggingFace（或设置镜像 HF_ENDPOINT=https://hf-mirror.com）

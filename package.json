@@ -1,0 +1,15 @@
+{
+  "name": "klrun",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "KLrun - a Laya-style typed-decision engine that plays the Chrome T-Rex runner",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "distill": "node brain/distill.mjs",
+    "bench": "node brain/bench.mjs",
+    "bundle": "node tools/bundle.mjs",
+    "verify:bundle": "node tools/verify-bundle.cjs"
+  },
+  "license": "MIT"
+}

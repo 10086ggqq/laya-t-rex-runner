@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KLrun · Laya 决策引擎驱动的小恐龙智能游玩</title>
+<style>
+  :root{
+    --bg:#f6f8fa;
+    --card:#ffffff;
+    --line:#e3e7eb;
+    --line-strong:#cfd6dd;
+    --ink:#1f2328;
+    --ink-2:#5f6672;
+    --ink-3:#8b939e;
+    --accent:#1a73e8;
+    --ok:#0f9d58;
+    --bad:#d93025;
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--sans);
+    font-size:14px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  header{
+    border-bottom:1px solid var(--line); background:rgba(255,255,255,.86);
+    backdrop-filter:saturate(180%) blur(8px); position:sticky; top:0; z-index:20;
+  }
+  .wrap{max-width:1340px; margin:0 auto; padding:0 22px}
+  header .wrap{display:flex; align-items:center; gap:16px; height:56px}
+  .logo{font-weight:700; letter-spacing:.2px; font-size:16px}
+  .logo span{color:var(--ink-3); font-weight:400; font-size:12px; margin-left:8px}
+  header nav{margin-left:auto; display:flex; gap:16px; font-size:13px}
+
+  main{padding:22px 0 60px}
+  .grid{display:grid; grid-template-columns:minmax(0,1.45fr) minmax(360px,1fr); gap:18px; align-items:start}
+  @media (max-width:1080px){ .grid{grid-template-columns:1fr} }
+
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:16px; margin-bottom:18px;
+  }
+  .card h2{
+    margin:0 0 12px; font-size:13px; font-weight:600; letter-spacing:.04em;
+    text-transform:uppercase; color:var(--ink-2);
+    display:flex; align-items:center; gap:8px;
+  }
+  .card h2 small{font-weight:400; text-transform:none; letter-spacing:0; color:var(--ink-3); font-size:12px}
+
+  /* 游戏画面 */
+  .stage{background:#f7f7f7; border:1px solid var(--line); border-radius:10px; overflow:hidden}
+  #game{display:block; width:100%; height:auto; image-rendering:auto}
+
+  /* 控件 */
+  .controls{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; align-items:end}
+  label.field{display:block; font-size:12px; color:var(--ink-2); margin-bottom:6px}
+  .val{font-family:var(--mono); color:var(--ink); font-weight:600}
+  input[type=range]{width:100%; accent-color:var(--accent)}
+  input[type=number]{
+    width:100%; padding:6px 8px; border:1px solid var(--line-strong); border-radius:8px;
+    font-family:var(--mono); font-size:13px; background:#fff; color:var(--ink);
+  }
+  .row{display:flex; gap:8px; flex-wrap:wrap}
+  button{
+    font-family:inherit; font-size:13px; padding:7px 13px; border-radius:8px;
+    border:1px solid var(--line-strong); background:#fff; color:var(--ink); cursor:pointer;
+  }
+  button:hover{background:#f1f4f7}
+  button:disabled{opacity:.55; cursor:default}
+  button.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+  button.primary:hover{background:#1667d0}
+
+  /* 大脑选择 */
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{
+    border:1px solid var(--line-strong); background:#fff; color:var(--ink);
+    border-radius:999px; padding:5px 13px; font-size:13px; cursor:pointer;
+  }
+  .chip.active{
+    border-color:var(--accent); color:var(--accent); background:#eaf1fe;
+    box-shadow:inset 0 0 0 1px var(--accent);
+  }
+  .chip.active{ border-color:var(--accent) }
+  #brain-hint{font-size:12px; color:var(--ink-3); margin-top:9px}
+
+  /* 驾驶舱 */
+  .decision-head{display:flex; align-items:baseline; gap:12px; margin-bottom:14px}
+  #chosen-action{font-family:var(--mono); font-size:30px; font-weight:700; letter-spacing:.5px}
+  .dec-meta{font-size:12px; color:var(--ink-3)}
+  .dec-meta b{font-family:var(--mono); color:var(--ink-2); font-size:14px}
+
+  .bars{display:flex; flex-direction:column; gap:6px; margin-bottom:14px}
+  .bar-row{display:grid; grid-template-columns:44px 1fr 58px; align-items:center; gap:9px; font-size:12px}
+  .bar-row.picked .bar-label{font-weight:700; color:var(--ink)}
+  .bar-label{font-family:var(--mono); color:var(--ink-2)}
+  .bar-track{height:9px; background:#eef1f4; border-radius:99px; overflow:hidden}
+  .bar-track i{display:block; height:100%; background:linear-gradient(90deg,#8ab4f8,#1a73e8); border-radius:99px}
+  .bar-row.picked .bar-track i{background:linear-gradient(90deg,#34a853,#0f9d58)}
+  .bar-val{font-family:var(--mono); color:var(--ink-2); text-align:right}
+
+  .gauges{display:grid; grid-template-columns:1fr; gap:10px; margin-bottom:14px}
+  .gauge{display:flex; align-items:center; gap:10px; font-size:12px; color:var(--ink-2)}
+  .gauge .g-label{width:76px; flex:none}
+  .gauge .g-track{flex:1; height:9px; border-radius:99px; background:linear-gradient(90deg,#e8f0fe,#fde7e9); position:relative; overflow:hidden}
+  .gauge .g-track i{position:absolute; inset:0 auto 0 0; background:linear-gradient(90deg,#f9ab00,#d93025); border-radius:99px}
+  .gauge .g-val{font-family:var(--mono); width:52px; text-align:right; color:var(--ink)}
+  .gauge-basis{font-size:11px; color:var(--ink-3); margin:-4px 0 8px 86px; font-family:var(--mono)}
+
+  .badge{display:inline-block; padding:3px 10px; border-radius:999px; font-size:12px; font-weight:600}
+  .badge.ok{background:#e6f4ea; color:#137333}
+  .badge.bad{background:#fce8e6; color:#c5221f}
+
+  .meta-grid{display:grid; grid-template-columns:auto 1fr; gap:5px 12px; font-size:12px; color:var(--ink-2); margin-top:6px}
+  .meta-grid .k{color:var(--ink-3)}
+  .pill{display:inline-block; padding:1px 8px; border-radius:99px; font-size:11px; font-weight:600; font-family:var(--mono)}
+  .pill.reason{background:#e8f0fe; color:#1a73e8}
+  .pill.fast{background:#f1f3f4; color:#5f6368}
+
+  /* 日志 */
+  table{width:100%; border-collapse:collapse; font-size:12px}
+  th{ text-align:left; font-weight:600; color:var(--ink-3); font-size:11px;
+      text-transform:uppercase; letter-spacing:.04em; padding:6px 8px; border-bottom:1px solid var(--line) }
+  td{padding:5px 8px; border-bottom:1px solid #f1f3f5}
+  td.num{font-family:var(--mono); text-align:right}
+  td.strong{font-weight:700}
+  tbody tr:last-child td{border-bottom:none}
+  .dot{display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:6px; vertical-align:middle}
+  .mini{font-size:10px; padding:1px 6px; border-radius:99px; font-family:var(--mono)}
+  .mini.ok{background:#e6f4ea; color:#137333}
+  .mini.bad{background:#fce8e6; color:#c5221f}
+  .mini.reason{background:#e8f0fe; color:#1a73e8}
+  .mini.fast{background:#f1f3f4; color:#5f6368}
+  td.ok{color:#137333} td.bad{color:#c5221f}
+  .muted{color:var(--ink-3)}
+
+  .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(94px,1fr)); gap:10px 14px}
+  .stat .k{font-size:11px; color:var(--ink-3)}
+  .stat .v{font-family:var(--mono); font-size:16px; font-weight:600}
+
+  pre#state-doc{
+    margin:0; padding:11px 12px; background:#f8f9fb; border:1px solid var(--line);
+    border-radius:8px; font-family:var(--mono); font-size:11.5px; line-height:1.55;
+    color:#3c4453; overflow:auto; max-height:172px; white-space:pre;
+  }
+
+  #toast{
+    position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
+    background:#202124; color:#fff; padding:10px 18px; border-radius:9px; font-size:13px;
+    opacity:0; pointer-events:none; transition:.24s; z-index:99; max-width:76vw;
+  }
+  #toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+  footer{color:var(--ink-3); font-size:12px; border-top:1px solid var(--line); padding:18px 0 40px}
+  footer .wrap{display:flex; gap:16px; flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">KLrun<span>Laya 风格类型化决策 × Chrome 小恐龙</span></div>
+    <nav>
+      <a href="README.md">README</a>
+      <a href="https://github.com/wayou/t-rex-runner" target="_blank" rel="noreferrer">t-rex-runner</a>
+      <a href="https://github.com/NandhaKishorM/laya" target="_blank" rel="noreferrer">laya</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="grid">
+
+      <!-- ============ 左列 ============ -->
+      <div>
+        <section class="card">
+          <h2>游戏画面 <small>与 Chromium 同参数：重力 0.6 / 起跳 -10 / 加速 0.001 / 速度上限 13</small></h2>
+          <div class="stage"><canvas id="game" width="1200" height="300"></canvas></div>
+        </section>
+
+        <section class="card">
+          <h2>大脑与难度</h2>
+          <div class="chips" id="brain-switch"></div>
+          <div id="brain-hint"></div>
+
+          <div class="controls" style="margin-top:16px">
+            <div>
+              <label class="field">推演倍速 <span class="val" id="speed-val">1×</span></label>
+              <input type="range" id="speed" min="1" max="30" value="1" />
+            </div>
+            <div>
+              <label class="field">感知延迟 <span class="val" id="delay-val">0 帧（0ms）</span></label>
+              <input type="range" id="delay" min="0" max="14" value="0" />
+            </div>
+            <div>
+              <label class="field">随机种子 <span class="val">同种子 = 同一串障碍</span></label>
+              <input type="number" id="seed" value="1" min="1" />
+            </div>
+            <div class="row">
+              <button id="pause">暂停</button>
+              <button id="step">单步</button>
+              <button id="restart">重开</button>
+              <button id="reroll">换一局</button>
+              <label class="field" style="display:flex;align-items:center;gap:6px;margin:0 0 0 4px">
+                <input type="checkbox" id="debug" /> 碰撞盒
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>运行统计</h2>
+          <div class="stats">
+            <div class="stat"><div class="k">当前得分</div><div class="v" id="stat-score">0</div></div>
+            <div class="stat"><div class="k">最高分</div><div class="v" id="stat-best">0</div></div>
+            <div class="stat"><div class="k">存活帧</div><div class="v" id="stat-ticks">0</div></div>
+            <div class="stat"><div class="k">当前速度</div><div class="v" id="stat-speed">6.00</div></div>
+            <div class="stat"><div class="k">决策/秒</div><div class="v" id="stat-dps">0</div></div>
+            <div class="stat"><div class="k">渲染 fps</div><div class="v" id="stat-fps">0</div></div>
+            <div class="stat"><div class="k">决策时延 avg/p95</div><div class="v" id="stat-lat">—</div></div>
+            <div class="stat"><div class="k">决策次数</div><div class="v" id="stat-calls">0</div></div>
+            <div class="stat" style="grid-column:span 2"><div class="k">动作次数</div><div class="v" id="stat-actions">—</div></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>状态文档 <small>喂给决策引擎的观察</small></h2>
+          <pre id="state-doc"></pre>
+        </section>
+      </div>
+
+      <!-- ============ 右列 ============ -->
+      <aside>
+        <section class="card">
+          <h2>类型化决策 <small>choice / score / noul</small></h2>
+
+          <div class="decision-head">
+            <div>
+              <div id="chosen-action">—</div>
+              <div class="dec-meta">本帧选中的控制量 · 置信度 <b id="chosen-conf">—</b></div>
+            </div>
+          </div>
+
+          <div class="bars" id="choice-bars"></div>
+
+          <div class="gauges">
+            <div class="gauge">
+              <span class="g-label">紧迫度</span>
+              <span class="g-track"><i id="urgency-fill" style="width:0%"></i></span>
+              <span class="g-val" id="urgency-val">0.000</span>
+            </div>
+            <div class="gauge-basis" id="urgency-basis"></div>
+            <div class="gauge">
+              <span class="g-label">保持不动</span>
+              <span id="noul-badge" class="badge ok">—</span>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <span class="k">路由</span><span><span class="pill fast" id="meta-path">—</span></span>
+            <span class="k">执行头</span><span id="meta-head">—</span>
+            <span class="k">单次前向</span><span id="meta-latency">—</span>
+            <span class="k">路由理由</span><span id="meta-why">—</span>
+            <span class="k">试算量</span><span id="meta-cost">—</span>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>决策日志 <small>最近 11 帧</small></h2>
+          <table>
+            <thead>
+              <tr><th>帧</th><th>动作</th><th>置信</th><th>紧迫</th><th>不动</th><th>路由</th><th>ms</th></tr>
+            </thead>
+            <tbody id="log-body"></tbody>
+          </table>
+        </section>
+
+        <section class="card">
+          <h2>同种子对比评测 <small>确定性内核，结果可逐位复现</small></h2>
+          <div class="row" style="align-items:center; margin-bottom:12px">
+            <label class="field" style="margin:0">每档局数
+              <input type="number" id="bench-episodes" value="6" min="1" max="30" style="width:74px" />
+            </label>
+            <button class="primary" id="bench-run">跑基准测试</button>
+            <span class="muted" id="bench-progress"></span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>大脑</th><th>延迟</th><th>均分</th><th>中位</th><th>区间</th>
+                <th>撞车率</th><th>reason</th><th>ms</th>
+              </tr>
+            </thead>
+            <tbody id="bench-body">
+              <tr><td colspan="8" class="muted">点上面按钮，在后台 Worker 里跑 0 帧与 8 帧两档对比。</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>KLrun · 游戏内核移植自 Chromium 内置小恐龙（wayou/t-rex-runner），决策层按其类型化决策范式实现，可对接 laya 服务。</span>
+  </div>
+</footer>
+
+<div id="toast"></div>
+<script type="module" src="src/ui.js"></script>
+</body>
+</html>

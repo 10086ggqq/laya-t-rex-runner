@@ -1,0 +1,982 @@
+{
+  "trainedAt": "2026-09-22T11:54:58.386Z",
+  "config": {
+    "target": "cls",
+    "episodes": 24,
+    "maxTicks": 4200,
+    "hidden": 72,
+    "epochs": 35,
+    "daggerRounds": 3,
+    "daggerEpisodes": 3,
+    "daggerEpochs": 15,
+    "batch": 256,
+    "lr": 0.004,
+    "keepNone": 0.2,
+    "valRatio": 0.08,
+    "seedBase": 3000,
+    "es": true,
+    "esPop": 10,
+    "esGens": 15,
+    "esSigma": 0.03,
+    "esLr": 0.02,
+    "esSeeds": 3,
+    "esTicks": 5000,
+    "delays": [
+      0,
+      8
+    ],
+    "evalEpisodes": 6,
+    "evalTicks": 20000
+  },
+  "network": [
+    27,
+    72,
+    72,
+    4
+  ],
+  "target": "cls",
+  "delays": {
+    "0": {
+      "weightsFile": "brain/undefined.json",
+      "samples": 33440,
+      "labelHist": {
+        "NONE": 18063,
+        "JUMP": 8786,
+        "DUCK": 3837,
+        "DROP": 2754
+      },
+      "teacherMeanScore": 850,
+      "valAgree": 0.9637383177570094,
+      "es": {
+        "applied": true,
+        "before": 120.66666666666667,
+        "after": 1062,
+        "generations": 15
+      },
+      "teacherEpisodes": [
+        {
+          "seed": 3001,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3014,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3027,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3040,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3053,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3066,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3079,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3092,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3105,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3118,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3131,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3144,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3157,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3170,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3183,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3196,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3209,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3222,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3235,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3248,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3261,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3274,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3287,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3300,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        }
+      ]
+    },
+    "8": {
+      "weightsFile": "brain/undefined-delay8.json",
+      "samples": 34404,
+      "labelHist": {
+        "NONE": 18355,
+        "JUMP": 9447,
+        "DUCK": 3837,
+        "DROP": 2765
+      },
+      "teacherMeanScore": 850,
+      "valAgree": 0.9142441860465116,
+      "es": {
+        "applied": true,
+        "before": 64.66666666666667,
+        "after": 688.3333333333334,
+        "generations": 15
+      },
+      "teacherEpisodes": [
+        {
+          "seed": 3001,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3014,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3027,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3040,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3053,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3066,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3079,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3092,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3105,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3118,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3131,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3144,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3157,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3170,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3183,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3196,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3209,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3222,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3235,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3248,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3261,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3274,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3287,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        },
+        {
+          "seed": 3300,
+          "ticks": 4200,
+          "score": 850,
+          "driver": "teacher"
+        }
+      ]
+    }
+  },
+  "evaluation": [
+    {
+      "brain": "random",
+      "delay": 0,
+      "mean": 41,
+      "median": 41,
+      "min": 41,
+      "max": 41,
+      "crashRate": 1,
+      "cappedRate": 0,
+      "maxSpeedRate": 0,
+      "reasonRatio": 1,
+      "latencyAvgMs": 0.005730416666402663,
+      "actionCounts": {
+        "NONE": 393,
+        "JUMP": 406,
+        "DUCK": 404,
+        "DROP": 416
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 41,
+          "ticks": 271
+        },
+        {
+          "seed": 1008,
+          "score": 41,
+          "ticks": 270
+        },
+        {
+          "seed": 1015,
+          "score": 41,
+          "ticks": 269
+        },
+        {
+          "seed": 1022,
+          "score": 41,
+          "ticks": 270
+        },
+        {
+          "seed": 1029,
+          "score": 41,
+          "ticks": 269
+        },
+        {
+          "seed": 1036,
+          "score": 41,
+          "ticks": 270
+        }
+      ]
+    },
+    {
+      "brain": "rule",
+      "delay": 0,
+      "mean": 5888,
+      "median": 5888,
+      "min": 5888,
+      "max": 5888,
+      "crashRate": 0,
+      "cappedRate": 1,
+      "maxSpeedRate": 1,
+      "reasonRatio": 1,
+      "latencyAvgMs": 0.00344930555624564,
+      "actionCounts": {
+        "NONE": 85117,
+        "JUMP": 27264,
+        "DUCK": 7619,
+        "DROP": 0
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1008,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1015,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1022,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1029,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1036,
+          "score": 5888,
+          "ticks": 20000
+        }
+      ]
+    },
+    {
+      "brain": "planner",
+      "delay": 0,
+      "mean": 5888,
+      "median": 5888,
+      "min": 5888,
+      "max": 5888,
+      "crashRate": 0,
+      "cappedRate": 1,
+      "maxSpeedRate": 1,
+      "reasonRatio": 1,
+      "latencyAvgMs": 0.09281597222119066,
+      "actionCounts": {
+        "NONE": 101440,
+        "JUMP": 12653,
+        "DUCK": 2481,
+        "DROP": 3426
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1008,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1015,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1022,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1029,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1036,
+          "score": 5888,
+          "ticks": 20000
+        }
+      ]
+    },
+    {
+      "brain": "neural",
+      "delay": 0,
+      "mean": 1402,
+      "median": 1334,
+      "min": 1316,
+      "max": 1558,
+      "crashRate": 1,
+      "cappedRate": 0,
+      "maxSpeedRate": 0,
+      "reasonRatio": 1,
+      "latencyAvgMs": 0.014648194445746615,
+      "actionCounts": {
+        "NONE": 29860,
+        "JUMP": 5375,
+        "DUCK": 1128,
+        "DROP": 643
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 1331,
+          "ticks": 5937
+        },
+        {
+          "seed": 1008,
+          "score": 1552,
+          "ticks": 6657
+        },
+        {
+          "seed": 1015,
+          "score": 1334,
+          "ticks": 5947
+        },
+        {
+          "seed": 1022,
+          "score": 1558,
+          "ticks": 6675
+        },
+        {
+          "seed": 1029,
+          "score": 1321,
+          "ticks": 5904
+        },
+        {
+          "seed": 1036,
+          "score": 1316,
+          "ticks": 5886
+        }
+      ]
+    },
+    {
+      "brain": "layalite",
+      "delay": 0,
+      "mean": 5888,
+      "median": 5888,
+      "min": 5888,
+      "max": 5888,
+      "crashRate": 0,
+      "cappedRate": 1,
+      "maxSpeedRate": 1,
+      "reasonRatio": 0.7695083333333333,
+      "latencyAvgMs": 0.06616027777822132,
+      "actionCounts": {
+        "NONE": 102743,
+        "JUMP": 12633,
+        "DUCK": 1590,
+        "DROP": 3034
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1008,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1015,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1022,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1029,
+          "score": 5888,
+          "ticks": 20000
+        },
+        {
+          "seed": 1036,
+          "score": 5888,
+          "ticks": 20000
+        }
+      ]
+    },
+    {
+      "brain": "layalite-neural",
+      "delay": 0,
+      "mean": 1402,
+      "median": 1334,
+      "min": 1316,
+      "max": 1558,
+      "crashRate": 1,
+      "cappedRate": 0,
+      "maxSpeedRate": 0,
+      "reasonRatio": 0.734614240926231,
+      "latencyAvgMs": 0.015292500000456734,
+      "actionCounts": {
+        "NONE": 30208,
+        "JUMP": 5375,
+        "DUCK": 1128,
+        "DROP": 295
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 1331,
+          "ticks": 5937
+        },
+        {
+          "seed": 1008,
+          "score": 1552,
+          "ticks": 6657
+        },
+        {
+          "seed": 1015,
+          "score": 1334,
+          "ticks": 5947
+        },
+        {
+          "seed": 1022,
+          "score": 1558,
+          "ticks": 6675
+        },
+        {
+          "seed": 1029,
+          "score": 1321,
+          "ticks": 5904
+        },
+        {
+          "seed": 1036,
+          "score": 1316,
+          "ticks": 5886
+        }
+      ]
+    },
+    {
+      "brain": "random",
+      "delay": 8,
+      "mean": 41,
+      "median": 41,
+      "min": 41,
+      "max": 41,
+      "crashRate": 1,
+      "cappedRate": 0,
+      "maxSpeedRate": 0,
+      "reasonRatio": 1,
+      "latencyAvgMs": 0.006044583333277842,
+      "actionCounts": {
+        "NONE": 393,
+        "JUMP": 406,
+        "DUCK": 404,
+        "DROP": 416
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 41,
+          "ticks": 271
+        },
+        {
+          "seed": 1008,
+          "score": 41,
+          "ticks": 270
+        },
+        {
+          "seed": 1015,
+          "score": 41,
+          "ticks": 269
+        },
+        {
+          "seed": 1022,
+          "score": 41,
+          "ticks": 270
+        },
+        {
+          "seed": 1029,
+          "score": 41,
+          "ticks": 269
+        },
+        {
+          "seed": 1036,
+          "score": 41,
+          "ticks": 270
+        }
+      ]
+    },
+    {
+      "brain": "rule",
+      "delay": 8,
+      "mean": 206,
+      "median": 230,
+      "min": 47,
+      "max": 443,
+      "crashRate": 1,
+      "cappedRate": 0,
+      "maxSpeedRate": 0,
+      "reasonRatio": 1,
+      "latencyAvgMs": 0.007215972221779845,
+      "actionCounts": {
+        "NONE": 5270,
+        "JUMP": 2005,
+        "DUCK": 0,
+        "DROP": 0
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 47,
+          "ticks": 307
+        },
+        {
+          "seed": 1008,
+          "score": 230,
+          "ticks": 1375
+        },
+        {
+          "seed": 1015,
+          "score": 205,
+          "ticks": 1237
+        },
+        {
+          "seed": 1022,
+          "score": 232,
+          "ticks": 1389
+        },
+        {
+          "seed": 1029,
+          "score": 80,
+          "ticks": 512
+        },
+        {
+          "seed": 1036,
+          "score": 443,
+          "ticks": 2455
+        }
+      ]
+    },
+    {
+      "brain": "planner",
+      "delay": 8,
+      "mean": 46,
+      "median": 42,
+      "min": 41,
+      "max": 60,
+      "crashRate": 1,
+      "cappedRate": 0,
+      "maxSpeedRate": 0,
+      "reasonRatio": 1,
+      "latencyAvgMs": 0.14697944444471636,
+      "actionCounts": {
+        "NONE": 1606,
+        "JUMP": 79,
+        "DUCK": 0,
+        "DROP": 120
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 60,
+          "ticks": 387
+        },
+        {
+          "seed": 1008,
+          "score": 51,
+          "ticks": 334
+        },
+        {
+          "seed": 1015,
+          "score": 41,
+          "ticks": 270
+        },
+        {
+          "seed": 1022,
+          "score": 41,
+          "ticks": 271
+        },
+        {
+          "seed": 1029,
+          "score": 41,
+          "ticks": 270
+        },
+        {
+          "seed": 1036,
+          "score": 42,
+          "ticks": 273
+        }
+      ]
+    },
+    {
+      "brain": "neural",
+      "delay": 8,
+      "mean": 967,
+      "median": 1196,
+      "min": 81,
+      "max": 1405,
+      "crashRate": 1,
+      "cappedRate": 0,
+      "maxSpeedRate": 0,
+      "reasonRatio": 1,
+      "latencyAvgMs": 0.01781138888901397,
+      "actionCounts": {
+        "NONE": 19581,
+        "JUMP": 3926,
+        "DUCK": 2473,
+        "DROP": 871
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 1196,
+          "ticks": 5475
+        },
+        {
+          "seed": 1008,
+          "score": 752,
+          "ticks": 3807
+        },
+        {
+          "seed": 1015,
+          "score": 1405,
+          "ticks": 6184
+        },
+        {
+          "seed": 1022,
+          "score": 1075,
+          "ticks": 5047
+        },
+        {
+          "seed": 1029,
+          "score": 81,
+          "ticks": 520
+        },
+        {
+          "seed": 1036,
+          "score": 1295,
+          "ticks": 5818
+        }
+      ]
+    },
+    {
+      "brain": "layalite",
+      "delay": 8,
+      "mean": 46,
+      "median": 42,
+      "min": 41,
+      "max": 60,
+      "crashRate": 1,
+      "cappedRate": 0,
+      "maxSpeedRate": 0,
+      "reasonRatio": 0.139212614475296,
+      "latencyAvgMs": 0.033963333334799645,
+      "actionCounts": {
+        "NONE": 1726,
+        "JUMP": 79,
+        "DUCK": 0,
+        "DROP": 0
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 60,
+          "ticks": 387
+        },
+        {
+          "seed": 1008,
+          "score": 51,
+          "ticks": 334
+        },
+        {
+          "seed": 1015,
+          "score": 41,
+          "ticks": 270
+        },
+        {
+          "seed": 1022,
+          "score": 41,
+          "ticks": 271
+        },
+        {
+          "seed": 1029,
+          "score": 41,
+          "ticks": 270
+        },
+        {
+          "seed": 1036,
+          "score": 42,
+          "ticks": 273
+        }
+      ]
+    },
+    {
+      "brain": "layalite-neural",
+      "delay": 8,
+      "mean": 967,
+      "median": 1196,
+      "min": 81,
+      "max": 1405,
+      "crashRate": 1,
+      "cappedRate": 0,
+      "maxSpeedRate": 0,
+      "reasonRatio": 0.682731483404925,
+      "latencyAvgMs": 0.014362777778377576,
+      "actionCounts": {
+        "NONE": 20330,
+        "JUMP": 3904,
+        "DUCK": 2012,
+        "DROP": 605
+      },
+      "episodes": [
+        {
+          "seed": 1001,
+          "score": 1196,
+          "ticks": 5475
+        },
+        {
+          "seed": 1008,
+          "score": 752,
+          "ticks": 3807
+        },
+        {
+          "seed": 1015,
+          "score": 1405,
+          "ticks": 6184
+        },
+        {
+          "seed": 1022,
+          "score": 1075,
+          "ticks": 5047
+        },
+        {
+          "seed": 1029,
+          "score": 81,
+          "ticks": 520
+        },
+        {
+          "seed": 1036,
+          "score": 1295,
+          "ticks": 5818
+        }
+      ]
+    }
+  ]
+}
